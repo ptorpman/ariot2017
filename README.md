@@ -1,7 +1,7 @@
-===============================================================================
-=                              PiGreenHouse
-=
-=               - A creation by Altran Gnomes Class of '17 -
+-- PiGreenHouse --
+
+--- A creation by Altran Gnomes Class of '17 ---
+
 ===============================================================================
 
 INTRODUCTION
