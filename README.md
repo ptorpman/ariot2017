@@ -22,4 +22,13 @@ The following equipment is needed in order to make your own PiGreenHouse:
 - Raspberry Pi Pinoir Camera module v2
 - Raspberry Pi 3 with power supply
 
+## THE NEEDED SETUP
+
+
+
+
+## INSTALL THE SOFTWARE
+
+
+
 
