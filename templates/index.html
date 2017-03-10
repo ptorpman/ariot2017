@@ -1,0 +1,89 @@
+<html>
+<head>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}"></style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='scripts/functions.js') }}"></script>
+</head>
+<body>
+
+	<header>
+		<img id="gnomeLogo" src="altrangnome.png"/>
+		<table id="iconsTable">
+			<tr>
+				<td>
+					<img src="test.png"/>
+				</td>
+				<td>
+					<img src="test.png"/>
+				</td>
+				<td>
+					<img src="test.png"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="test.png"/>
+				</td>
+				<td>
+					<img src="test.png"/>
+				</td>
+				<td>
+					<img src="test.png"/>
+				</td>
+			</tr>
+		</table>
+		<h1>ALTRAN GARDEN GNOMES</h1>
+
+	</header>
+	<div id="contentContainer">
+		<table id="measurementTable">
+			<thead>
+				<th>
+					Measurement
+				</th>
+				<th>
+					value
+				</th>
+				<th>
+					setting
+				</th>
+
+			</thead>
+			<tbody>
+				<tr>
+					<td>Temperature</td>
+					<td>42</td>
+					<td>50</td>
+				</tr>
+			</tbody>
+		</table>
+		<div id="controlContainer">
+			<div class="control">
+				<span class="controlLabel">Lampa</span>
+				<button id="lampOn" class="button">
+					<span>På</span>
+				</button>
+				<button id="lampOff" class="button">
+					<span>Av</span>
+				</button>
+			</div>
+
+			<br/>
+
+			<div class="control">
+				<span class="controlLabel">Fläkt</span>
+				<button id="fanOn" class="button">
+					<span>På</span>
+				</button>
+				<button id="fanOff" class="button">
+					<span>AV</span>
+				</button>
+			</div>
+		</div>
+	</div>
+	<footer>
+		Footer
+	</footer>
+
+</body>
+</html>
