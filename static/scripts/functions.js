@@ -26,7 +26,7 @@
 				} else {
 			   	var $tr = $('<tr>').append(
 		            $('<td>').text(i),
-		            $('<td>').text(item)
+		            $('<td>').text(parseFloat(item).toFixed(2) + ((i.indexOf('Humidity') > -1 || i == 'Light') ? '%' : '°C') )
 		        ).appendTo('#measurementTable');
 				}
 			});

@@ -1,5 +1,6 @@
 <html>
 <head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}"></style>
 	<link rel="icon" href="/static/images/gnome_logo.png" type="image/x-icon" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -18,7 +19,7 @@
 					<img src="/static/images/gurka.png"/>
 				</td>
 				<td>
-					<img src="/static/images/TOMAT.png"/>
+					<img src="/static/images/tomat.png"/>
 				</td>
 			</tr>
 		</table>
@@ -44,6 +45,7 @@
 
 
 		<div class="contentBox">
+			<span id="waterLabel">Vattennivå</span>
 			<div id="waterContainer">
 				<img id="waterImage" />
 			</div>

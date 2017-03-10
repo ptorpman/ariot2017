@@ -14,6 +14,7 @@ html {
 body {
   position: relative;
   margin: 0;
+  background-color: #f0f8ff;
   padding-bottom: 6rem;
   min-height: 100%;
   font-family: "Helvetica Neue", Arial, sans-serif;
@@ -42,11 +43,12 @@ td{
 }
 
 .contentBox{
-  background-color: #f0f8ff;
-  padding: 10px;
-  margin-right: 10px;
+  background-color: #fff;
+  padding: 25px;
+  margin-right: 25px;
   float:left;
-  width: 48%;
+  width: 45%;
+  border-radius: 35px;
 }
 
 .control{
@@ -67,8 +69,8 @@ td{
 
 header {
   padding: 20px;
+  background-color: #fff;
   border-bottom: 1px solid green;
-  background-color: #f0f8ff;
 }
 
 header #gnomeLogo{
@@ -89,8 +91,17 @@ header #iconsTable{
   float:right;
 }
 
+#waterImage{
+  width:25%;
+}
+#waterLabel {
+  padding-left: 20px;
+  text-align:center;
+}
+
 #waterContainer {
   position:absolute;
+  padding: 10px;
 }
 
 footer{
@@ -109,6 +120,11 @@ footer{
   background: url('/static/images/grass.png');
   height: 60px;
 }
+
+iframe {
+  border-radius:35px;
+}
+
 #footerLogo {
   float: right;
   max-width: 300px;
