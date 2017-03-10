@@ -1,4 +1,4 @@
-from flask import Flask, url_for, render_template
+from flask import Flask, url_for, render_template, jsonify
 from random import choice
 import simplejson as json
 import os
@@ -26,7 +26,13 @@ def images():
 
 @app.route('/api_data')
 def api_data():
-    return json.dumps({'value': '42'});
+    try:
+        with open('data.json') as data_file:
+            data = json.loads(data_file.read())
+
+    except IOError:
+        print ("Error")
+    return jsonify("{}")
 
 @app.route('/turnOnLights')
 def turnOnLights():
