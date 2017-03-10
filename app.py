@@ -8,8 +8,8 @@ import threading
 import time
 
 app = Flask(__name__)
-rfConst = "/tmp/sensorvalues.json"
-wfConst = '/tmp/piinput.json'
+rfConst = "sensorvalues.json"
+wfConst = "piinput.json"
 fanConst = "fan"
 lampConst = "lamp"
 
