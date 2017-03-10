@@ -11,7 +11,7 @@ from bluepy import sensortag
 
 
 class TempAndHumidity(object):
-	def __init__(self, mac):
+	def __init__(self, mac='BC:6A:29:AC:53:91'):
 		''' Constructor '''
 		print "* Connecting to sensor..."
 		self._tag = sensortag.SensorTag(addr=mac)
@@ -67,20 +67,30 @@ class TempAndHumidity(object):
 		return door_status
 	
 
+def initialize_sensors():
+    tag = TempAndHumidity()
+    return tag
 
-mac = 'BC:6A:29:AC:53:91'
+#mac = 'BC:6A:29:AC:53:91'
 
 # Instantiate..
-tah = TempAndHumidity(mac)
 
-print "IRtemp is " , tah.read_irtemperature()
-print "Airtemp is " , tah.read_airtemperature()
-print "Humidity is ", tah.read_humidity()
-print "preasure is ", tah.read_barometer()
-print "accelerometer is ", tah.read_accelerometer()
-print "coordinates are ", tah.read_gyroscope()
-print "magnetometer is  ", tah.read_magnetometer()
-print "door_status is ", tah.read_door_status()
+
+def main():
+	print "IRtemp is " , tah.read_irtemperature()
+	print "Airtemp is " , tah.read_airtemperature()
+	print "Humidity is ", tah.read_humidity()
+	print "preasure is ", tah.read_barometer()
+	print "accelerometer is ", tah.read_accelerometer()
+	print "coordinates are ", tah.read_gyroscope()
+	print "magnetometer is  ", tah.read_magnetometer()
+	print "door_status is ", tah.read_door_status()
+
+
+if __name__ == '__main__':
+    print "Welcome to PiGreenHouse!"
+    tah = TempAndHumidity()
+    main()
 
 
 
