@@ -6,6 +6,12 @@ import threading
 import time
 
 app = Flask(__name__)
+rfConst = "data.json" #TODO CHANGE
+wfConst = "input.json" #TODO CHANGE
+fanConst = "fan"
+lampConst = "lamp"
+
+inputFile = {}
 
 @app.route('/')
 def index():
@@ -27,26 +33,62 @@ def images():
 @app.route('/api_data')
 def api_data():
     try:
-        with open('data.json') as data_file:
-            data = json.loads(data_file.read())
-
+        with open(rfConst) as data_file:
+            data = jsonify(json.loads(data_file.read()))
     except IOError:
         print ("Error")
-    return jsonify("{}")
+        data = jsonify("{}")
+    finally:
+        data_file.close()
+    return data
 
 @app.route('/turnOnLights')
 def turnOnLights():
-    #Call to turn on lights function
+    inputFile[lampConst] = "on"
     return "LIGHTS ARE ON"
 
 @app.route('/turnOffLights')
 def turnOffLights():
-    #Call to turn off lights function
+    inputFile[lampConst] = "off"
     return "LIGHTS ARE OFF"
+
+@app.route('/setAutoLights')
+def setAutoLights():
+    intpuFile[lampConst] = "auto"
+    return "LIGHTS ARE AUTO"
+
+@app.route('/turnOnFan')
+def turnOnFan():
+    inputFile[fanConst] = "on"
+    return "FAN IS ON"
+
+@app.route('/turnOffFan')
+def turnOffFan():
+    inputFile[fanConst] = "off"
+    return "FAN IS OFF"
+
+@app.route('/setAutoFan')
+def setAutoFan():
+    intpuFile[fanConst] = "auto"
+    return "FAN IS AUTO"
 
 @app.route('/take_picture')
 def take_picture():
     return 'Capture'
+
+
+@app.route("/writeOrderFile")
+def writeInputFile():
+    print(inputFile)
+    try:
+        with open(wfConst, 'w') as outfile:
+            json.dump(inputFile, outfile)
+    except IOError:
+        print("WriteError")
+        return "Error"
+    finally:
+        outfile.close()
+    return "success"
 
 def update():
     while True:

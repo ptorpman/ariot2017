@@ -1,15 +1,61 @@
-#mainContainer{
-  width:100%;
+
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+#controlContainer{
+  float: right;
 }
 
 #contentContainer{
-  
+  margin: 0 auto;
+  padding-top: 64px;
+  max-width: 640px;
+  width: 94%;
 }
 
-header{
+#measurementTable{
+  float:left;
+}
 
+.controlLabel{
+  clear:both;
+}
+
+header #gnomeLogo{
+    float: left;
+}
+
+header h1 {
+    text-align: center;
+}
+
+
+header #iconsTable{
+  float:right;
 }
 
 footer{
-
+  position:absolute;
+  padding: 20px;
+  width: 100%;
+  left:0;
+  bottom:0;
+  background-color: #bebeea;
 }

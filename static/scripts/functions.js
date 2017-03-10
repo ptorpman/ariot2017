@@ -3,8 +3,8 @@
 		$.ajax({
 			url: "/api_data",
 			type: "GET",
-			success: function(){
-
+			success: function(data){
+				console.log(data);
 			}
 
 		})
