@@ -66,6 +66,12 @@ class TempAndHumidity(object):
 			door_status = False
 		return door_status
 	
+	#def read_moving_status(self, gero_value):
+	#	
+	#	if gero_value[0]<-2:
+			
+		
+	
 
 def initialize_sensors():
     return TempAndHumidity()
