@@ -61,9 +61,9 @@ class TempAndHumidity(object):
 		#door_status=0 means door is closed
 		#dorr_status=1 means door is open
 		if x_axis >-47:
-			door_status = 0
+			door_status = True
 		else:
-			door_status = 1
+			door_status = False
 		return door_status
 	
 
