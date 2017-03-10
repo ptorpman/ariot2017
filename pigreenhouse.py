@@ -126,7 +126,6 @@ class Sensors(object):
             sensors.read_sensors()
             sensors.analysis()
             sensors.store_sensors()
-            
             sensors.check_input()
         
         
