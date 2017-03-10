@@ -81,11 +81,11 @@ class Sensors(object):
         try:
             self._soil_humidity = self._mcp3008.read_soil_humidity()
             self._light = self._mcp3008.read_lightsensor()
-            self._water_alarm = self._mcp3008.read_wateralarm()
+            self._water_alarm = self._mcp3008.read_water_status()
         except Exception as exc:
             self._soil_humidity = 75.0
             self._light = 75.0
-            self._water_alarm = False
+            self._water_alarm = "red"
 
     def store_sensors(self):
         ''' Store sensors to file '''

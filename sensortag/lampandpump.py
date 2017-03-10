@@ -106,7 +106,7 @@ class LampAndPump(object):
             return False
 
         
-    def handle_pump(self, alarm_on, soil_humidity):
+    def handle_pump(self, alarm_value, soil_humidity):
         ''' Handle the pump based on the water alarm '''
 
         # If pump thread has been started, see if we can join it
@@ -116,7 +116,7 @@ class LampAndPump(object):
                 self._pump_thread = None
                 self.pump_thread_done = False
         
-        if alarm_on:
+        if alarm_value == "red":
             self.pump_off()
             return
 
