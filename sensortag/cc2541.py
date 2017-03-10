@@ -18,7 +18,7 @@ class TempAndHumidity(object):
 	
 		self._temp_value = 0.0
 
-	def read_temperature(self):
+	def read_irtemperature(self):
 		self._tag.IRtemperature.enable()
 		time.sleep(1.0)
 		self._temp_value = self._tag.IRtemperature.read()
@@ -31,6 +31,13 @@ class TempAndHumidity(object):
 		self._hum_value = self._tag.humidity.read()
 		
 		return self._hum_value[1]
+	
+	def read_airtemperature(self):
+		self._tag.IRtemperature.enable()
+		time.sleep(1.0)
+		self._temp_value = self._tag.IRtemperature.read()
+
+		return self._temp_value[0]
 
 
 		
@@ -65,7 +72,8 @@ mac = 'BC:6A:29:AC:53:91'
 # Instantiate..
 tah = TempAndHumidity(mac)
 
-print "IRtemp is " , tah.read_temperature()
+print "IRtemp is " , tah.read_irtemperature()
+print "Airtemp is " , tah.read_airtemperature()
 print "Humidity is ", tah.read_humidity()
 
 
