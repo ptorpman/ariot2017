@@ -12,19 +12,18 @@ class Camera(object):
     def __init__(self):
         ''' Constructor '''
         self._cam = PiCamera()
+        self._cam.resolution = (800, 600)
 
         # Camera warmup time
         time.sleep(2)
 
     def take_photo(self):
-
+        ''' Take a picture '''
         try:
             img = 'image' + str(int(round(time.time() * 1000))) + '.jpg'
-            camera.capture('./static/images/' + img)
+            self._cam.capture('./static/photos/' + img)
         finally:
-            camera.close()
             return 'Hello world!'
-
 
 # LIBRARY FUNCTIONS
         

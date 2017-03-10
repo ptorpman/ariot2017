@@ -28,13 +28,16 @@ class InputThread(threading.Thread):
 
 def check_input_file(owner):
     ''' Function used for checking input '''
-    in_file = '/tmp/piinput.json'
+    in_file = './piinput.json'
     
     while True:
         if os.path.exists(in_file):
             # Load file contents
             with open(in_file, 'r') as aFile:
-                config = json.loads(aFile.readlines())
+                contents = aFile.readlines()[0]
+                print "CONTENTS: ", contents
+                
+                config = json.loads(contents)
                 owner.handle_input(config)
         if owner.stop_input_thread:
             return
@@ -115,14 +118,16 @@ class Sensors(object):
         #  take_picture <timestamp>
         #  airtemp_max  <val>    e.g "25.0" 
 
+        print "GOT INPUT: ", config
+        
         if self._current_config == None:
             # All new config
             if config.has_key('lamp'):
                 self._lamp_and_pump.handle_lamp_from_gui(config['lamp'])
             if config.has_key('fan'):
-                self._lamp_and_pump.handle_fan_from_gui(config['fan'])
+                self._fan.handle_fan_from_gui(config['fan'])
             if config.has_key('airtemp_max'):
-                self._lamp_and_pump.set_airtemp_max(config['airtemp_max'])
+                self._fan.set_airtemp_max(config['airtemp_max'])
             if config.has_key('take_picture'):
                 self._camera.take_photo()
         else:
