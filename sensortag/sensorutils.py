@@ -10,7 +10,7 @@ def upload_to_cloud(file_path):
 
     file_name = os.path.basename(file_path)
 
-    cmd = "./dropbox_uploader.sh upload %s %s" % (file_path, file_name)
+    cmd = "./clouduploader %s %s" % (file_path, file_name)
 
     try:
         subprocess.call([cmd], shell=True)
