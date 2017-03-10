@@ -25,15 +25,29 @@ class Mcp3008(object):
         value = self._mcp.read_adc(0)
         return (value * 100/ 1023)
     
-    def read_wateralarm(self):
-        ''' Returns if water alarm is on or off '''
-        value = self._mcp.read_adc(5)
 
-        if value > 1000:
-            return True
-        else:
-            return False
+    def tank_is_full(self):
+        ''' Returns true when tank is full '''
+        return self._mcp.read_adc(4) < 500
 
+    def tank_level_warning(self):
+        ''' Returns true when water is below warning level '''
+        return self._mcp.read_adc(5) >500
+ 
+    def tank_alarm(self):
+        ''' Returns true when tank is empty '''
+        return self._mcp.read_adc(6) > 500
+
+    def read_water_status(self):
+        ''' return green/yellow/red '''
+        if self.tank_alarm():
+            return "red"
+
+        if not self.tank_level_warning():
+            return "green"
+
+        return "yellow"
+ 
         
 # LIBRARY FUNCTIONS
 
