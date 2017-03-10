@@ -14,6 +14,7 @@ from sensortag import cc2541
 from sensortag import mcp3008
 from sensortag import lampandpump
 from sensortag import fan
+from sensortag import camera
 
 class InputThread(threading.Thread):
     ''' Threading class used for checking input '''
@@ -52,6 +53,7 @@ class Sensors(object):
             pass
         self._lamp_and_pump = lampandpump.initialize_sensors()
         self._fan = fan.initialize_sensors()
+        self._camera = camera.initialize_sensors()
 
         self._input_thread = InputThread(check_input_file, self)
         self._current_config = None
@@ -93,7 +95,7 @@ class Sensors(object):
         to_store['WaterAlarm'] = self._water_alarm
         to_store['DoorOpen'] = self._door_open
 
-        with open('/tmp/sensorvalues.json', 'w') as aFile:
+        with open('./sensorvalues.json', 'w') as aFile:
             aFile.write(json.dumps(to_store))
 
         print "* Stored values to /tmp/sensorvalues.json"
@@ -110,23 +112,36 @@ class Sensors(object):
         # Available input values
         #  lamp         on/off/auto
         #  fan          on/off/auto
+        #  take_picture <timestamp>
         #  airtemp_max  <val>    e.g "25.0" 
 
         if self._current_config == None:
             # All new config
-            self._lamp_and_pump.handle_lamp_from_gui(config['lamp'])
-            self._lamp_and_pump.handle_fan_from_gui(config['fan'])
-            self._lamp_and_pump.set_airtemp_max(config['airtemp_max'])
+            if config.has_key('lamp'):
+                self._lamp_and_pump.handle_lamp_from_gui(config['lamp'])
+            if config.has_key('fan'):
+                self._lamp_and_pump.handle_fan_from_gui(config['fan'])
+            if config.has_key('airtemp_max'):
+                self._lamp_and_pump.set_airtemp_max(config['airtemp_max'])
+            if config.has_key('take_picture'):
+                self._camera.take_photo()
         else:
-            if config['lamp'] != self._current_config['lamp']:
+            if config.has_key('lamp') and \
+               (config['lamp'] != self._current_config['lamp']):
                 self._lamp_and_pump.handle_lamp_from_gui(config['lamp'])
             
-            if config['fan'] != self._current_config['fan']:
+            if config.has_key('fan') and \
+               (config['fan'] != self._current_config['fan']):
                 self._fan.handle_fan_from_gui(config['fan'])
 
-            if config['airtemp_max'] != self._current_config['airtemp_max']:
+            if config.has_key('airtemp_max') and \
+               (config['airtemp_max'] != self._current_config['airtemp_max']):
                 self._fan.set_airtemp_max(config['airtemp_max'])
 
+            if config.has_key('take_picture') and \
+               (config['take_picture'] != self._current_config['take_picture']):
+                self._camera.take_photo()
+                
         # Update current config
         self._current_config = config
 
@@ -137,7 +152,6 @@ class Sensors(object):
         # Start input handling thread
         self.stop_input_thread = False
         self._input_thread.start()
-
         
         # Enter main loop
         while True:
