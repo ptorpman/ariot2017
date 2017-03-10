@@ -5,6 +5,7 @@
 # Authors: Altran Gnomes, (c) 2017
 #
 import time
+import json
 
 from sensortag import cc2541
 from sensortag import mcp3008
@@ -13,7 +14,7 @@ from sensortag import lampandpump
 
 class Sensors(object):
     ''' Main class for the Sensors control '''
-    
+
     def __init__(self):
         ''' Constructor '''
         self._cc2541  = cc2541.initialize_sensors()
@@ -32,11 +33,27 @@ class Sensors(object):
 
     def store_sensors(self):
         ''' Store sensors to file '''
-        pass
+        to_store = {}
 
+        to_store['AirTemp'] = self._air_temp
+        to_store['AirHumidity'] = self._air_humidity
+        to_store['GroundTemp'] = self._ground_temp
+        to_store['SoilHumidity'] = self._soil_humidity
+        to_store['Light'] = self._light
+        to_store['WaterAlarm'] = self._water_alarm
+
+        with open('/tmp/sensorvalues.json', 'w') as aFile:
+            aFile.write(json.dumps(to_store))
+
+        print "* Stored values to /tmp/sensorvalues.json"
+            
     def analysis(self):
         ''' Perform some analysis based on the sensor values '''
+
         self._mcp3008.handle_light(self._light)
+        self._mcp3008.handle_pump(self._water_alarm, self._soil_humidity)
+
+
         
 
     
