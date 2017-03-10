@@ -26,61 +26,56 @@
 
 	</header>
 	<div id="contentContainer">
-		<table id="measurementTable">
-			<thead>
-				<th>
-					Measurement
-				</th>
-				<th>
-					value
-				</th>
+		<div class="contentBox">
+			<table id="measurementTable">
+				<thead>
+					<th>
+						Mätning
+					</th>
+					<th>
+						Värde
+					</th>
 
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-		<div id="controlContainer">
-			<div class="control">
-				<span class="controlLabel">Lampa</span>
-				<button id="lampOn" class="button">
-					<span>På</span>
-				</button>
-				<button id="lampOff" class="button">
-					<span>Av</span>
-				</button>
-				<img src="/static/images/light.png" />
-			</div>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
 
-			<br/>
+		<div class="contentBox">
+			<div id="controlContainer">
+				<div class="control">
+					<span class="controlLabel">Lampa</span>
+					<img id="lampToggle" class="controlImg"  src="/static/images/light.png" />
+				</div>
 
-			<div class="control">
-				<span class="controlLabel">Fläkt</span>
-				<button id="fanOn" class="button">
-					<span>På</span>
-				</button>
-				<button id="fanOff" class="button">
-					<span>AV</span>
-				</button>
-				<img src="/static/images/fan.png" />
-			</div>
+				<br/>
+
+				<div class="control">
+					<span class="controlLabel">Fläkt</span>
+					<img id="fanToggle"  class="controlImg"  src="/static/images/fan.png" />
+				</div>
 
 
-			<br/>
+				<br/>
 
-			<div class="control">
-				<span class="controlLabel">Vatten</span>
-				<button id="waterOn" class="button">
-					<span>På</span>
-				</button>
-				<button id="waterOff" class="button">
-					<span>AV</span>
-				</button>
-				<img src="/static/images/water_in_pot.png" />
+				<div class="control">
+					<span class="controlLabel">Vatten</span>
+					<img id="waterToggle" class="controlImg" src="/static/images/water_in_pot.png" />
+				</div>
+
+				<br/>
+
+				<div class="control">
+					<span class="controlLabel">Kamera</span>
+					<img id="cameraToggle" class="controlImg" src="/static/images/camera.png" />
+				</div>
 			</div>
 		</div>
 	</div>
+	<div class="footerGrass"></div>
 	<footer>
-		Footer
+		<img id="footerLogo" src="/static/images/pi-greenhouse.png" />
 	</footer>
 
 </body>

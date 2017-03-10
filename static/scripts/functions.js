@@ -18,42 +18,38 @@
 			})
 	}
 
-	function turnOnLights(){
-			$('#lampOn').css('color', 'green');
-			$('#lampOff').css('color', 'red');
-			//Set button rights.
-	}
-
-	function turnOffLights(){
-
-	}
-
-	function setAutoLights(){
-
-	}
-
-	function turnOnFan(){
-
-	}
-
-	function turnOffFan(){
-
-	}
-
-	function setAutoFan(){
-
-	}
-
 	$(document).ready(function(){
-		//var refresher = setInterval(function(){
+		var refresher = setInterval(function(){
 			callAjax('/api_data', callDataApi);
-		//}, 5000)
-			$('#lampOn').click(function(){
-				callAjax("/turnOnLights", turnOnLights);
-			});
+		}, 5000)
+		callAjax('/api_data', callDataApi);
 
-			$('#lampOff').click(function(){
-				callAjax("/turnOnLights", turnOffLights);
+		$('.controlImg').click(function(){
+			$(this).toggleClass('active');
+		});
+
+		$('#lampToggle').click(function(){
+			if($(this).hasClass('active')){
+					callAjax("/turnOffLights", function(){});
+			} else {
+					callAjax("/turnOnLights", function(){});
+			}
+		});
+
+		$('#fanToggle').click(function(){
+			if($(this).hasClass('active')){
+					callAjax("/turnOffFan", function(){});
+			} else {
+					callAjax("/turnOnFan", function(){});
+			}
+		});
+
+			$('#cameraToggle').click(function(){
+					var $that = $(this);
+					callAjax("/take_picture", function(){});
+					setTimeout(function(){
+							$that.removeClass('active');
+					}, 5000);
 			});
 	});
 })();
