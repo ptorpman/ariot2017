@@ -58,7 +58,6 @@ class Sensors(object):
         self._air_humidity = self._cc2541.read_humidity()
         self._ground_temp = self._cc2541.read_ground_temperature()
         self._door_open   = self._cc2541.read_door_status()
-
         self._soil_humidity = self._mcp3008.read_soil_humidity()
         self._light = self._mcp3008.read_lightsensor()
         self._water_alarm = self._mcp3008.read_wateralarm()
@@ -73,6 +72,7 @@ class Sensors(object):
         to_store['SoilHumidity'] = self._soil_humidity
         to_store['Light'] = self._light
         to_store['WaterAlarm'] = self._water_alarm
+        to_store['DoorOpen'] = self._door_open
 
         with open('/tmp/sensorvalues.json', 'w') as aFile:
             aFile.write(json.dumps(to_store))
@@ -102,11 +102,11 @@ class Sensors(object):
             if config['lamp'] != self._current_config['lamp']:
                 self._lamp_and_pump.handle_lamp_from_gui(config['lamp'])
             
-#            if config['fan'] != self._current_config['fan']:
-#                self._lamp_and_pump.handle_fan_from_gui(config['fan'])
+            if config['fan'] != self._current_config['fan']:
+                self._fan.handle_fan_from_gui(config['fan'])
 
-#            if config['airtemp_max'] != self._current_config['airtemp_max']:
-#                self._lamp_and_pump.set_airtemp_max(config['airtemp_max'])
+            if config['airtemp_max'] != self._current_config['airtemp_max']:
+                self._fan.set_airtemp_max(config['airtemp_max'])
 
         # Update current config
         self._current_config = config
@@ -126,7 +126,6 @@ class Sensors(object):
             sensors.read_sensors()
             sensors.analysis()
             sensors.store_sensors()
-            
             sensors.check_input()
         
         
