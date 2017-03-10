@@ -24,6 +24,7 @@ def run_the_pump(owner):
     time.sleep(2)
     print "* Turning pump off..."
     owner.pump_off()
+    owner.pump_thread_done = True
     
 
 class LampAndPump(object):
@@ -36,6 +37,7 @@ class LampAndPump(object):
 
         self.pump_thread_done = False
         self._pump_thread = None
+
         
         GPIO.setmode(GPIO.BOARD) 
         GPIO.setup(self._lamp_port, GPIO.OUT)
@@ -44,8 +46,9 @@ class LampAndPump(object):
         GPIO.output(self._pump_port, GPIO.LOW)
 
         self._lamp_on = False
-        self._pump_on = False
+        self._lamp_manual_mode = False
 
+        self._pump_on = False
         self._pump_started = None
 
     def lamp_on(self):
@@ -100,7 +103,7 @@ class LampAndPump(object):
         if (int(time.time()) - self._pump_started) < 300:
             # We will not run pump more than every other 5 minutes
             print "* Pump not started. Next possible start in %d seconds" % (300 - (int(time.time()) - self._pump_started))
-            return True
+            return False
 
         
     def handle_pump(self, alarm_on, soil_humidity):
@@ -132,12 +135,33 @@ class LampAndPump(object):
         self._pump_thread = PumpRunner(run_the_pump, self)
         self._pump_thread.start()
         
+
+    def handle_lamp_from_gui(self, value):
+        ''' Change lamp from GUI '''
+
+        if value == 'on':
+            self.lamp_on()
+            self._lamp_manual_mode = True
+        elif value == 'off':
+            self.lamp_off()
+            self._lamp_manual_mode = True
+        else:
+            # Auto
+            self._lamp_manual_mode = False
+            
         
+    def handle_fan_from_gui(self, value):
+        ''' Change fan from GUI '''
+        pass
+
+    def set_airtemp_max(self, value):
+        ''' Change fan from GUI '''
+        pass
+    
 
 # LIBRARY FUNCTIONS
 
 def initialize_sensors():
-    lp = LampAndPump(lamp_port=36, pump_port=38)
-    return lp
+    return LampAndPump(lamp_port=36, pump_port=38)
 
 
