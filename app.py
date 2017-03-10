@@ -58,7 +58,7 @@ def turnOffLights():
 
 @app.route('/setAutoLights')
 def setAutoLights():
-    intpuFile[lampConst] = "auto"
+    inputFile[lampConst] = "auto"
     return "LIGHTAUTO"
 
 #FAN CONTROLS
@@ -74,7 +74,7 @@ def turnOffFan():
 
 @app.route('/setAutoFan')
 def setAutoFan():
-    intpuFile[fanConst] = "auto"
+    inputFile[fanConst] = "auto"
     return "FANAUTO"
 
 #CAMERA CONTROL

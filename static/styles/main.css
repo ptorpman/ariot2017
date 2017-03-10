@@ -62,10 +62,16 @@ td{
   vertical-align: middle;
 }
 
-.active {
+[state='active'] {
   border: 5px solid black;
   border-radius: 100px;
 }
+
+[state='auto'] {
+  border: 5px dashed black;
+  border-radius: 100px;
+}
+
 
 header {
   padding: 20px;
@@ -92,7 +98,7 @@ header #iconsTable{
 }
 
 #waterImage{
-  width:25%;
+  width:100%;
 }
 #waterLabel {
   padding-left: 20px;
@@ -100,6 +106,7 @@ header #iconsTable{
 }
 
 #waterContainer {
+  max-width: 120px;
   position:absolute;
   padding: 10px;
 }

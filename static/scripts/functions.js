@@ -39,22 +39,28 @@
 		callAjax('/api_data', callDataApi);
 
 		$('.controlImg').click(function(){
-			$(this).toggleClass('active');
+			var classes = ['inactive', 'active','auto'];
+			var state = classes[($.inArray($(this).attr('state'), classes)+1)%classes.length];
+	    $(this).attr('state', state);
 		});
 
 		$('#lampToggle').click(function(){
-			if($(this).hasClass('active')){
-					callAjax("/turnOffLights", function(){});
-			} else {
+			if($(this).attr('state') == 'active'){
 					callAjax("/turnOnLights", function(){});
+			} else if($(this).attr('state') == 'inactive'){
+					callAjax("/turnOffLights", function(){});
+			} else if($(this).attr('state') == 'auto'){
+					callAjax("/setAutoLights", function(){});
 			}
 		});
 
 		$('#fanToggle').click(function(){
-			if($(this).hasClass('active')){
+			if($(this).attr('state') == 'active'){
+						callAjax("/turnOnFan", function(){});
+			} else if($(this).attr('state') == 'inactive'){
 					callAjax("/turnOffFan", function(){});
-			} else {
-					callAjax("/turnOnFan", function(){});
+			} else if($(this).attr('state') == 'auto'){
+					callAjax("/setAutoFan", function(){})
 			}
 		});
 
