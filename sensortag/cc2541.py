@@ -16,14 +16,14 @@ class TempAndHumidity(object):
 		print "* Connecting to sensor..."
 		self._tag = sensortag.SensorTag(addr=mac)
 		print "* Connected: ", self._tag
+		self._tag.magnetometer.enable()
 		self._tag.IRtemperature.enable()
 		self._tag.humidity.enable()
 		self._tag.IRtemperature.enable()
 		self._tag.barometer.enable()
 		self._tag.accelerometer.enable()
 		self._tag.gyroscope.enable()
-		self._tag.magnetometer.enable()
-		time.sleep(1.0)
+		time.sleep(2.0)
 		print "* Sensors enabled"
 	
 		self._temp_value = 0.0
@@ -57,10 +57,10 @@ class TempAndHumidity(object):
 		return self._magn_value
 	
 	def read_door_status(self):
-		x_axis=self.read_magnetometer()[2]
+		z_axis=self.read_magnetometer()[2]
 		#door_status=0 means door is closed
 		#dorr_status=1 means door is open
-		if x_axis >-47:
+		if z_axis >-46:
 			door_status = True
 		else:
 			door_status = False
