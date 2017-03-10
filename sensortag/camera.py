@@ -5,7 +5,8 @@
 from picamera import PiCamera
 from time import sleep
 import time
-
+import subprocess
+import os
 
 class Camera(object):
     ''' Class for handling the camera '''
@@ -19,12 +20,33 @@ class Camera(object):
 
     def take_photo(self):
         ''' Take a picture '''
-        try:
-            img = 'image' + str(int(round(time.time() * 1000))) + '.jpg'
-            self._cam.capture('./static/photos/' + img)
-        finally:
-            return 'Hello world!'
 
+        img = 'image' + str(int(round(time.time() * 1000))) + '.jpg'
+
+        img_path = './static/photos/%s' % img
+        
+        try:
+            self._cam.capture(img_path)
+        finally:
+            pass
+
+        self.upload_to_cloud(img_path)
+
+    def upload_to_cloud(self, img_path):
+        ''' Upload to dropbox '''
+
+        img_file = os.path.basename(img_path)
+        
+        cmd = "./dropbox_uploader.sh upload %s %s" % (img_path, img_file)
+        
+        try:
+            subprocess.call([cmd], shell=True)
+            print "* Photo uploaded to dropbox"
+        except Exception as exc:
+
+            pass
+
+        
 # LIBRARY FUNCTIONS
         
 def initialize_sensors():

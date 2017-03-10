@@ -35,8 +35,6 @@ def check_input_file(owner):
             # Load file contents
             with open(in_file, 'r') as aFile:
                 contents = aFile.readlines()[0]
-                print "CONTENTS: ", contents
-                
                 config = json.loads(contents)
                 owner.handle_input(config)
         if owner.stop_input_thread:
