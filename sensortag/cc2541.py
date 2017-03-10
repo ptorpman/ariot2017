@@ -9,6 +9,7 @@ from bluepy import btle
 from bluepy import sensortag
 
 
+
 class TempAndHumidity(object):
 	def __init__(self, mac):
 		''' Constructor '''
