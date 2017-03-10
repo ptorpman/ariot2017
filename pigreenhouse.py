@@ -9,12 +9,15 @@ import json
 import os
 import threading
 import signal
+import socket
+import subprocess
 
 from sensortag import cc2541
 from sensortag import mcp3008
 from sensortag import lampandpump
 from sensortag import fan
 from sensortag import camera
+from sensortag import sensorutils
 
 class InputThread(threading.Thread):
     ''' Threading class used for checking input '''
@@ -152,6 +155,8 @@ class Sensors(object):
     def main_loop(self):
         ''' Main program of the PiGreenHouse '''
 
+        self.publish_ip()
+        
         # Start input handling thread
         self.stop_input_thread = False
         self._input_thread.start()
@@ -165,10 +170,19 @@ class Sensors(object):
             self.store_sensors()
         
         
+    def publish_ip(self):
+        ''' Store public IP address to Dropbox '''
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("gmail.com",80))
 
-    
-    
-    
+        ip = s.getsockname()[0]
+
+        with open('./ip.txt', 'w') as aFile:
+            aFile.write(ip)
+
+        sensorutils.upload_to_cloud('./ip.txt')
+            
+            
 
 if __name__ == '__main__':
     print "Welcome to PiGreenHouse!"
