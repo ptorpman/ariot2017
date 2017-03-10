@@ -7,6 +7,8 @@
 import time
 import json
 import os
+import threading
+import signal
 
 from sensortag import cc2541
 from sensortag import mcp3008
@@ -21,7 +23,7 @@ class InputThread(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        self._target(*self.args)
+        self._target(*self._args)
 
 def check_input_file(owner):
     ''' Function used for checking input '''
@@ -33,7 +35,8 @@ def check_input_file(owner):
             with open(in_file, 'r') as aFile:
                 config = json.loads(aFile.readlines())
                 owner.handle_input(config)
-                
+        if owner.stop_input_thread:
+            return
         time.sleep(1)
         
         
@@ -43,24 +46,40 @@ class Sensors(object):
     def __init__(self):
         ''' Constructor '''
         self._cc2541  = cc2541.initialize_sensors()
-        self._mcp3008 = mcp3008.initialize_sensors()
+        try:
+            self._mcp3008 = mcp3008.initialize_sensors() 
+        except Exception as exc:
+            pass
         self._lamp_and_pump = lampandpump.initialize_sensors()
         self._fan = fan.initialize_sensors()
 
-        self._input_thread = InputThread()
+        self._input_thread = InputThread(check_input_file, self)
         self._current_config = None
-
+        signal.signal(signal.SIGINT, self.exit_gracefully)
+        signal.signal(signal.SIGTERM, self.exit_gracefully)
         
+    def exit_gracefully(self, signum, frame):
+        self.stop_input_thread = True
+        print "* Exiting PiGreenHouse..."
+        time.sleep(2)
+        self._input_thread.join()
+
+
     def read_sensors(self):
         ''' Read all the sensors '''
         
-        self._air_temp = self._cc2541.read_temperature()
+        self._air_temp = self._cc2541.read_airtemperature()
         self._air_humidity = self._cc2541.read_humidity()
-        self._ground_temp = self._cc2541.read_ground_temperature()
+        self._ground_temp = self._cc2541.read_irtemperature()
         self._door_open   = self._cc2541.read_door_status()
-        self._soil_humidity = self._mcp3008.read_soil_humidity()
-        self._light = self._mcp3008.read_lightsensor()
-        self._water_alarm = self._mcp3008.read_wateralarm()
+        try:
+            self._soil_humidity = self._mcp3008.read_soil_humidity()
+            self._light = self._mcp3008.read_lightsensor()
+            self._water_alarm = self._mcp3008.read_wateralarm()
+        except Exception as exc:
+            self._soil_humidity = 75.0
+            self._light = 75.0
+            self._water_alarm = False
 
     def store_sensors(self):
         ''' Store sensors to file '''
@@ -116,6 +135,7 @@ class Sensors(object):
         ''' Main program of the PiGreenHouse '''
 
         # Start input handling thread
+        self.stop_input_thread = False
         self._input_thread.start()
 
         
@@ -123,10 +143,9 @@ class Sensors(object):
         while True:
             time.sleep(5)
             
-            sensors.read_sensors()
-            sensors.analysis()
-            sensors.store_sensors()
-            sensors.check_input()
+            self.read_sensors()
+            self.analysis()
+            self.store_sensors()
         
         
 
