@@ -38,12 +38,17 @@ body {
   clear:both;
 }
 
+header {
+  margin-top:20px;
+}
+
 header #gnomeLogo{
-    float: left;
+  float:left;
+  max-width:200px;
 }
 
 header h1 {
-    text-align: center;
+  text-align: center;
 }
 
 

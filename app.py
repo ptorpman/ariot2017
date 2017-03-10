@@ -11,6 +11,7 @@ app = Flask(__name__)
 rfConst = "sensorvalues.json"
 wfConst = "piinput.json"
 fanConst = "fan"
+cameraConst = "take_picture"
 lampConst = "lamp"
 
 inputFile = {"lamp": "auto", "fan": "auto", "airtemp_max":"25"}
@@ -79,7 +80,8 @@ def setAutoFan():
 #CAMERA CONTROL
 @app.route('/take_picture')
 def take_picture():
-    return 'Capture'
+    inputFile[cameraConst] = str(int(round(time.time() * 1000)))
+    return writeInputFile()
 
 
 @app.route("/writeOrderFile")
