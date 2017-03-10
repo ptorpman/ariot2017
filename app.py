@@ -6,14 +6,16 @@ import threading
 import time
 
 app = Flask(__name__)
+rfConst = "/tmp/sensorvalues.json"
+wfConst = '/tmp/piinput.json'
+fanConst = "fan"
+lampConst = "lamp"
+
+inputFile = {"lamp": "auto", "fan": "auto", "airtemp_max":"25"}
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
-#Temperatur
-#Vatten
-#Ljus
 
 @app.route('/images')
 def images():
@@ -24,29 +26,71 @@ def images():
 
     return render_template('image.html', urls=urls)
 
+
+#ENDPOINTS
 @app.route('/api_data')
 def api_data():
     try:
-        with open('data.json') as data_file:
-            data = json.loads(data_file.read())
-
+        with open(rfConst) as data_file:
+            data = jsonify(json.loads(data_file.read()))
     except IOError:
         print ("Error")
-    return jsonify("{}")
+        data = jsonify("{}")
+    finally:
+        data_file.close()
+    return data
 
+
+
+#LIGHT CONTROLS
 @app.route('/turnOnLights')
 def turnOnLights():
-    #Call to turn on lights function
+    inputFile[lampConst] = "on"
     return "LIGHTS ARE ON"
 
 @app.route('/turnOffLights')
 def turnOffLights():
-    #Call to turn off lights function
+    inputFile[lampConst] = "off"
     return "LIGHTS ARE OFF"
 
+@app.route('/setAutoLights')
+def setAutoLights():
+    intpuFile[lampConst] = "auto"
+    return "LIGHTS ARE AUTO"
+
+#FAN CONTROLS
+@app.route('/turnOnFan')
+def turnOnFan():
+    inputFile[fanConst] = "on"
+    return "FAN IS ON"
+
+@app.route('/turnOffFan')
+def turnOffFan():
+    inputFile[fanConst] = "off"
+    return "FAN IS OFF"
+
+@app.route('/setAutoFan')
+def setAutoFan():
+    intpuFile[fanConst] = "auto"
+    return "FAN IS AUTO"
+
+#CAMERA CONTROL
 @app.route('/take_picture')
 def take_picture():
     return 'Capture'
+
+
+@app.route("/writeOrderFile")
+def writeInputFile():
+    print(inputFile)
+    try:
+        with open(wfConst, 'w') as outfile:
+            json.dump(inputFile, outfile)
+    except IOError:
+        print("WriteError")
+        return "Error"
+
+    return "success"
 
 def update():
     while True:
