@@ -68,8 +68,7 @@ class TempAndHumidity(object):
 	
 
 def initialize_sensors():
-    tag = TempAndHumidity()
-    return tag
+    return TempAndHumidity()
 
 #mac = 'BC:6A:29:AC:53:91'
 
