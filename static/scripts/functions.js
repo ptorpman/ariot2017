@@ -11,11 +11,25 @@
 	function callDataApi(data){
 			$('#measurementTable tbody').empty();
 	    $.each(data, function(i, item) {
-		   	var $tr = $('<tr>').append(
-	            $('<td>').text(i),
-	            $('<td>').text(item)
-	        ).appendTo('#measurementTable');
-			})
+				if( i === "WaterAlarm") {
+					switch (item){
+						case "green":
+							$('#waterImage').attr('src','/static/images/water_level_green_traffic.png');
+							break;
+						case "yellow":
+							$('#waterImage').attr('src','/static/images/water_level_yellow_traffic.png');
+							break;
+						default:
+							$('#waterImage').attr('src','/static/images/water_level_red_traffic.png');
+							break;
+					}
+				} else {
+			   	var $tr = $('<tr>').append(
+		            $('<td>').text(i),
+		            $('<td>').text(item)
+		        ).appendTo('#measurementTable');
+				}
+			});
 	}
 
 	$(document).ready(function(){

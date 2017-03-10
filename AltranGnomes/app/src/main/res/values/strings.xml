@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AltranGnomes</string>
+    <string name="ip">IP</string>
+    <string name="ipDefault">10.59.5.3</string>
+
+    <string name="title_activity_settings">Settings</string>
+
+</resources>

@@ -23,9 +23,9 @@ def index():
 @app.route('/images')
 def images():
     urls = []
-    names = os.listdir(os.path.join(app.static_folder, 'images'))
+    names = os.listdir(os.path.join(app.static_folder, 'photos'))
     for name in names:
-        urls.append(url_for('static', filename='images/' + name))
+        urls.append(url_for('static', filename='photos/' + name))
 
     return render_template('image.html', urls=urls)
 
@@ -96,13 +96,6 @@ def writeInputFile():
 
     return "success"
 
-def update():
-    while True:
-        print ('Hello World!') #Replace with capture to take picture.
-        time.sleep(10)
-
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
-#update()
