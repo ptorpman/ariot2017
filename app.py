@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from flask import Flask, url_for, render_template, jsonify
 from random import choice
 import simplejson as json
@@ -6,9 +8,10 @@ import threading
 import time
 
 app = Flask(__name__)
-rfConst = "/tmp/sensorvalues.json"
-wfConst = '/tmp/piinput.json'
+rfConst = "sensorvalues.json"
+wfConst = "piinput.json"
 fanConst = "fan"
+cameraConst = "take_picture"
 lampConst = "lamp"
 
 inputFile = {"lamp": "auto", "fan": "auto", "airtemp_max":"25"}
@@ -77,7 +80,8 @@ def setAutoFan():
 #CAMERA CONTROL
 @app.route('/take_picture')
 def take_picture():
-    return 'Capture'
+    inputFile[cameraConst] = str(int(round(time.time() * 1000)))
+    return writeInputFile()
 
 
 @app.route("/writeOrderFile")
