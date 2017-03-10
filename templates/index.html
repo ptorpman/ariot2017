@@ -1,34 +1,24 @@
 <html>
 <head>
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}"></style>
+	<link rel="icon" href="/static/images/gnome_logo.png" type="image/x-icon" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='scripts/functions.js') }}"></script>
 </head>
 <body>
 
 	<header>
-		<img id="gnomeLogo" src="altrangnome.png"/>
+		<img id="gnomeLogo" src="/static/images/gnome_logo.png"/>
 		<table id="iconsTable">
 			<tr>
 				<td>
-					<img src="test.png"/>
+					<img src="/static/images/chilli.png"/>
 				</td>
 				<td>
-					<img src="test.png"/>
+					<img src="/static/images/gurka.png"/>
 				</td>
 				<td>
-					<img src="test.png"/>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<img src="test.png"/>
-				</td>
-				<td>
-					<img src="test.png"/>
-				</td>
-				<td>
-					<img src="test.png"/>
+					<img src="/static/images/TOMAT.png"/>
 				</td>
 			</tr>
 		</table>
@@ -58,6 +48,7 @@
 				<button id="lampOff" class="button">
 					<span>Av</span>
 				</button>
+				<img src="/static/images/light.png" />
 			</div>
 
 			<br/>
@@ -70,6 +61,21 @@
 				<button id="fanOff" class="button">
 					<span>AV</span>
 				</button>
+				<img src="/static/images/fan.png" />
+			</div>
+
+
+			<br/>
+
+			<div class="control">
+				<span class="controlLabel">Vatten</span>
+				<button id="waterOn" class="button">
+					<span>På</span>
+				</button>
+				<button id="waterOff" class="button">
+					<span>AV</span>
+				</button>
+				<img src="/static/images/water_in_pot.png" />
 			</div>
 		</div>
 	</div>
