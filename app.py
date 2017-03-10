@@ -1,6 +1,5 @@
 from flask import Flask, url_for, render_template
 from random import choice
-from camera import capture
 import simplejson as json
 import os
 import threading
@@ -41,8 +40,7 @@ def turnOffLights():
 
 @app.route('/take_picture')
 def take_picture():
-    return capture()
-
+    return 'Capture'
 
 def update():
     while True:
