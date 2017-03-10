@@ -9,6 +9,14 @@ class Fan(object):
         self._max_air_temp = 20.0
         self._manual_mode = False
 
+        # setup output pins
+        GPIO.setmode(GPIO.BOARD) 
+        GPIO.setup(8,GPIO.OUT)
+        GPIO.setup(10,GPIO.OUT)
+        GPIO.setup(12,GPIO.OUT)
+        GPIO.output(8,GPIO.LOW)
+        GPIO.output(10,GPIO.HIGH)
+
     def handle_fan_from_gui(self, value):
         ''' Change fan from GUI '''
 
@@ -35,11 +43,14 @@ class Fan(object):
 
     def turn_on_fan(self):
         ''' Turns on the fan '''
-        pass
+        GPIO.output(12,GPIO.HIGH)
+
 
     def turn_off_fan(self):
-        ''' Turns on the fan '''
-        pass
+        ''' Turns off the fan '''
+        GPIO.output(12,GPIO.LOW)
+
+
     
 # LIBRARY FUNCTIONS
 
