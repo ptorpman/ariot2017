@@ -149,15 +149,6 @@ class LampAndPump(object):
             # Auto
             self._lamp_manual_mode = False
             
-        
-    def handle_fan_from_gui(self, value):
-        ''' Change fan from GUI '''
-        pass
-
-    def set_airtemp_max(self, value):
-        ''' Change fan from GUI '''
-        pass
-    
 
 # LIBRARY FUNCTIONS
 
