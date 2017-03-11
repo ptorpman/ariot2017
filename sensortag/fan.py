@@ -8,8 +8,9 @@ class Fan(object):
     ''' This class handles the fan '''
     def __init__(self):
         ''' Constructor '''
-        self._max_air_temp = 20.0
+        self._max_air_temp = 22.05
         self._manual_mode = False
+        self._fan_on = False
 
         # setup output pins
         GPIO.setmode(GPIO.BOARD) 
@@ -25,7 +26,9 @@ class Fan(object):
         if value == 'on':
             self.turn_on_fan()
             self._manual_mode = True
-        elif value == 'off':
+            return
+        
+        if value == 'off':
             self.turn_off_fan()
             self._manual_mode = True
         else:
@@ -38,21 +41,31 @@ class Fan(object):
     
     def handle_fan(self, air_temp):
         ''' Handle fan depending on air temperature '''
-        if air_temp > self._max_air_temp:
+
+        print "HANDLE FAN. TEMP: ", air_temp
+        print "HANDLE FAN. MAX: ", self._max_air_temp
+        
+        if float(air_temp) > self._max_air_temp:
+            print "* Turning on fan to cool stuff down..."
             self.turn_on_fan() 
         else:
+            print "* Turning off the fan."
             self.turn_off_fan() 
 
     def turn_on_fan(self):
         ''' Turns on the fan '''
         GPIO.output(12,GPIO.HIGH)
+        self._fan_on = True
 
 
     def turn_off_fan(self):
         ''' Turns off the fan '''
         GPIO.output(12,GPIO.LOW)
+        self._fan_on = False
 
-
+    def get_fan_on(self):
+        ''' Return if fan is on or off '''
+        return self._fan_on
     
 # LIBRARY FUNCTIONS
 
