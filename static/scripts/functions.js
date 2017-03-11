@@ -27,7 +27,7 @@
 				} else if (i === "DoorOpen"){
 				   	var $tr = $('<tr>').append(
 			            $('<td>').text(i),
-			            $('<td>').text(item ? "Ja" : "Nej")
+			            $('<td>').text(item ? "Yes" : "No")
 			        ).appendTo('#measurementTable');
 				} else if(item instanceof Array) {
 			   	var $tr = $('<tr>').append(
@@ -77,12 +77,14 @@
 			}
 		});
 
-			$('#cameraToggle').click(function(){
-					var $that = $(this);
-					callAjax("/take_picture", function(){});
-					setTimeout(function(){
-							$that.removeClass('active');
-					}, 5000);
-			});
+		$('#cameraToggle').click(function(){
+				console.log("TEST");
+				var $that = $(this);
+				$that.addClass('active');
+				callAjax("/take_picture", function(){});
+				setTimeout(function(){
+						$that.removeClass('active');
+				}, 5000);
+		});
 	});
 })();
