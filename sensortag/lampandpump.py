@@ -53,17 +53,18 @@ class LampAndPump(object):
 
     def lamp_on(self):
         ''' Turn lamp on '''
+        print "* Turn lamp ON"
         GPIO.output(self._lamp_port,GPIO.HIGH)
         self._lamp_on = True
 
     def lamp_off(self):
         ''' Turn lamp off '''
+        print "* Turn lamp OFF"
         GPIO.output(self._lamp_port,GPIO.LOW)
         self._lamp_on = False
 
     def pump_on(self):
         ''' Turn pump on '''
-
         GPIO.output(self._pump_port,GPIO.HIGH)
         self._pump_on = True
         self._pump_started = int(time.time())
@@ -156,3 +157,13 @@ def initialize_sensors():
     return LampAndPump(lamp_port=36, pump_port=38)
 
 
+if __name__ == '__main__':
+    l = initialize_sensors()
+    l.lamp_on()
+    time.sleep(2)
+    l.lamp_off()
+
+    l.pump_on()
+    time.sleep(1)
+    l.pump_off()
+    

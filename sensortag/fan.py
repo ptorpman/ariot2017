@@ -1,6 +1,8 @@
 # This file is part of PiGreenHouse
 # Author: Altran Gnomes, 2017
 #
+import RPi.GPIO as GPIO
+import time
 
 class Fan(object):
     ''' This class handles the fan '''
@@ -56,3 +58,15 @@ class Fan(object):
 
 def initialize_sensors():
     return Fan()
+
+
+if __name__ == '__main__':
+    f = initialize_sensors()
+
+    f.turn_on_fan()
+    time.sleep(2)
+    f.turn_off_fan()
+    
+    
+
+        

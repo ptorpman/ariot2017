@@ -134,6 +134,7 @@ class Sensors(object):
         else:
             if config.has_key('lamp') and \
                (config['lamp'] != self._current_config['lamp']):
+                print "UPDATING LAMP"
                 self._lamp_and_pump.handle_lamp_from_gui(config['lamp'])
             
             if config.has_key('fan') and \
