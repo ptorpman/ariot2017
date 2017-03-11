@@ -23,6 +23,11 @@
 							$('#waterImage').attr('src','/static/images/water_level_red_traffic.png');
 							break;
 					}
+				} else if (i === "DoorOpen"){
+				   	var $tr = $('<tr>').append(
+			            $('<td>').text(i),
+			            $('<td>').text(item ? "Ja" : "Nej")
+			        ).appendTo('#measurementTable');
 				} else {
 			   	var $tr = $('<tr>').append(
 		            $('<td>').text(i),
