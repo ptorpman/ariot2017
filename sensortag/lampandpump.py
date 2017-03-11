@@ -15,7 +15,7 @@ class PumpRunner(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        self._target(*self.args)
+        self._target(*self._args)
 
 def run_the_pump(owner):
     ''' Thread method to run the pump for a while '''

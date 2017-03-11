@@ -63,6 +63,23 @@ class Sensors(object):
         self._current_config = None
         signal.signal(signal.SIGINT, self.exit_gracefully)
         signal.signal(signal.SIGTERM, self.exit_gracefully)
+
+        self._average = {}
+        self._average['airtemp'] = 0.0
+        self._average['airhumidity'] = 0.0
+        self._average['groundtemp'] = 0.0
+        self._average['light'] = 0.0
+        self._average['soilhumidity'] = 0.0
+
+        self._sum_readings = {}
+        self._sum_readings['airtemp'] = 0.0
+        self._sum_readings['airhumidity'] = 0.0
+        self._sum_readings['groundtemp'] = 0.0
+        self._sum_readings['light'] = 0.0
+        self._sum_readings['soilhumidity'] = 0.0
+        
+        self._average_num_measurements = 0
+        
         
     def exit_gracefully(self, signum, frame):
         self.stop_input_thread = True
@@ -83,24 +100,34 @@ class Sensors(object):
         self._air_humidity = self._cc2541.read_humidity()
         self._ground_temp = self._cc2541.read_irtemperature()
         self._door_open   = self._cc2541.read_door_status()
-        try:
-            self._soil_humidity = self._mcp3008.read_soil_humidity()
-            self._light = self._mcp3008.read_lightsensor()
-            self._water_alarm = self._mcp3008.read_water_status()
-        except Exception as exc:
-            self._soil_humidity = 75.0
-            self._light = 75.0
-            self._water_alarm = "red"
+        self._soil_humidity = self._mcp3008.read_soil_humidity()
+        self._light = self._mcp3008.read_lightsensor()
+        self._water_alarm = self._mcp3008.read_water_status()
 
+        self._sum_readings['airtemp'] += self._air_temp
+        self._sum_readings['airhumidity'] += self._air_humidity
+        self._sum_readings['groundtemp'] += self._ground_temp
+        self._sum_readings['light'] += self._light
+        self._sum_readings['soilhumidity'] += self._soil_humidity
+
+        self._average_num_measurements += 1
+
+        self._average['airtemp'] = self._sum_readings['airtemp']  / self._average_num_measurements
+        self._average['airhumidity'] = self._sum_readings['airhumidity'] / self._average_num_measurements
+        self._average['groundtemp'] = self._sum_readings['groundtemp'] / self._average_num_measurements
+        self._average['light'] = self._sum_readings['light'] / self._average_num_measurements
+        self._average['soilhumidity'] = self._sum_readings['soilhumidity'] / self._average_num_measurements
+
+        
     def store_sensors(self):
         ''' Store sensors to file '''
         to_store = {}
 
-        to_store['AirTemp'] = self._air_temp
-        to_store['AirHumidity'] = self._air_humidity
-        to_store['GroundTemp'] = self._ground_temp
-        to_store['SoilHumidity'] = self._soil_humidity
-        to_store['Light'] = self._light
+        to_store['AirTemp'] = [self._air_temp, self._average['airtemp']]
+        to_store['AirHumidity'] = [self._air_humidity, self._average['airhumidity']]
+        to_store['GroundTemp'] = [self._ground_temp, self._average['groundtemp']]
+        to_store['SoilHumidity'] = [self._soil_humidity, self._average['soilhumidity']]
+        to_store['Light'] = [self._light, self._average['light']]
         to_store['WaterAlarm'] = self._water_alarm
         to_store['DoorOpen'] = self._door_open
 
@@ -169,8 +196,7 @@ class Sensors(object):
         
         # Enter main loop
         while True:
-            time.sleep(5)
-            
+            time.sleep(1)
             self.read_sensors()
             self.analysis()
             self.store_sensors()
