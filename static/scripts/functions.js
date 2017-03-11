@@ -77,12 +77,12 @@
 		});
 
 		$('#cameraToggle').click(function(){
-				console.log("TEST");
 				var $that = $(this);
 				$that.addClass('active');
 				callAjax("/take_picture", function(){});
 				setTimeout(function(){
 						$that.removeClass('active');
+						document.getElementById('imageFrame').contentWindow.location.reload();
 				}, 5000);
 		});
 	});
