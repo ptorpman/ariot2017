@@ -70,6 +70,11 @@ class Sensors(object):
         time.sleep(2)
         self._input_thread.join()
 
+        try:
+            os.remove('./piinput.json')
+        except Exception as exc:
+            pass
+
 
     def read_sensors(self):
         ''' Read all the sensors '''

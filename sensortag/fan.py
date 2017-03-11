@@ -25,7 +25,9 @@ class Fan(object):
         if value == 'on':
             self.turn_on_fan()
             self._manual_mode = True
-        elif value == 'off':
+            return
+        
+        if value == 'off':
             self.turn_off_fan()
             self._manual_mode = True
         else:

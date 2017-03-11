@@ -5,6 +5,7 @@ import RPi.GPIO as GPIO
 import datetime
 import time
 import threading
+import sys
 
 class PumpRunner(threading.Thread):
     ''' Threading class used for running the pump '''
@@ -20,8 +21,8 @@ def run_the_pump(owner):
     ''' Thread method to run the pump for a while '''
     print "* Turning pump on..."
     owner.pump_on()
-    print "* Waiting 2 seconds..."
-    time.sleep(2)
+    print "* Waiting 5 seconds..."
+    time.sleep(5)
     print "* Turning pump off..."
     owner.pump_off()
     owner.pump_thread_done = True
@@ -122,7 +123,7 @@ class LampAndPump(object):
             return
 
         # If humidity is too low we need to run the pump for a while
-        if soil_humidity < 15.0:
+        if soil_humidity <  25.0:
             self.run_the_pump()
 
     def run_the_pump(self):
@@ -143,7 +144,9 @@ class LampAndPump(object):
         if value == 'on':
             self.lamp_on()
             self._lamp_manual_mode = True
-        elif value == 'off':
+            return
+        
+        if value == 'off':
             self.lamp_off()
             self._lamp_manual_mode = True
         else:
@@ -158,12 +161,16 @@ def initialize_sensors():
 
 
 if __name__ == '__main__':
-    l = initialize_sensors()
-    l.lamp_on()
-    time.sleep(2)
-    l.lamp_off()
 
-    l.pump_on()
-    time.sleep(1)
-    l.pump_off()
+    l = initialize_sensors()
+
+    print "RUNNING PUMP: ", sys.argv[1]
+
+    if sys.argv[1] == "1":
+        l.lamp_on()
+        l.pump_on()
+        
+    if sys.argv[1] == "0":
+        l.pump_off()
+        l.lamp_off()
     
