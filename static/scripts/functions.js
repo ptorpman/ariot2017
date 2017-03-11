@@ -11,7 +11,6 @@
 	function callDataApi(data){
 			$('#measurementTable tbody').empty();
 	    $.each(data, function(i, item) {
-
 				if( i === "WaterAlarm") {
 					switch (item){
 						case "green":
@@ -24,7 +23,7 @@
 							$('#waterImage').attr('src','/static/images/water_level_red_traffic.png');
 							break;
 					}
-				} else if (i === "DoorOpen"){
+				} else if (i === "DoorOpen" || i === "PumpIsOn"  || i === "LampIsOn"  || i === "FanIsOn"){
 				   	var $tr = $('<tr>').append(
 			            $('<td>').text(i),
 			            $('<td>').text(item ? "Yes" : "No")

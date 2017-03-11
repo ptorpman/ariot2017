@@ -19,7 +19,7 @@ inputFile = {"lamp": "auto", "fan": "auto", "airtemp_max":"25"}
 @app.route('/')
 def index():
     return render_template('index.html')
-    
+
 @app.route('/images')
 def images():
     urls = []
