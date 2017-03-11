@@ -40,6 +40,7 @@ class Mcp3008(object):
 
     def read_water_status(self):
         ''' return green/yellow/red '''
+
         if self.tank_alarm():
             return "red"
 
@@ -62,5 +63,5 @@ if __name__ == '__main__':
 
     print mcp.read_soil_humidity();
     print mcp.read_lightsensor();
-    print mcp.read_wateralarm();
+    print mcp.read_water_status();
     
