@@ -19,12 +19,13 @@ inputFile = {"lamp": "auto", "fan": "auto", "airtemp_max":"25"}
 @app.route('/')
 def index():
     return render_template('index.html')
-
+    
 @app.route('/images')
 def images():
     urls = []
     names = os.listdir(os.path.join(app.static_folder, 'photos'))
-    for name in names:
+    names.sort()
+    for name in sorted(names):
         urls.append(url_for('static', filename='photos/' + name))
 
     return render_template('image.html', urls=urls)

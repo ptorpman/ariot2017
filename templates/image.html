@@ -3,7 +3,7 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='styles/images.css') }}"></style>
 </head>
 <body>
-{% for url in urls %}
+{% for url in urls |sort %}
 	<a href="{{url}}" target="_blank"><img src="{{url}}" /></a>
 {% endfor %}
 </body>
