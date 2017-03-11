@@ -49,33 +49,33 @@ def api_data():
 @app.route('/turnOnLights')
 def turnOnLights():
     inputFile[lampConst] = "on"
-    return "LIGHTON"
+    return writeInputFile()
 
 @app.route('/turnOffLights')
 def turnOffLights():
     inputFile[lampConst] = "off"
-    return "LIGHTOFF"
+    return writeInputFile()
 
 @app.route('/setAutoLights')
 def setAutoLights():
     inputFile[lampConst] = "auto"
-    return "LIGHTAUTO"
+    return writeInputFile()
 
 #FAN CONTROLS
 @app.route('/turnOnFan')
 def turnOnFan():
     inputFile[fanConst] = "on"
-    return "FANON"
+    return writeInputFile()
 
 @app.route('/turnOffFan')
 def turnOffFan():
     inputFile[fanConst] = "off"
-    return "FANOFF"
+    return writeInputFile()
 
 @app.route('/setAutoFan')
 def setAutoFan():
     inputFile[fanConst] = "auto"
-    return "FANAUTO"
+    return writeInputFile()
 
 #CAMERA CONTROL
 @app.route('/take_picture')
