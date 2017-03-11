@@ -3,10 +3,12 @@ package com.example.prosell.altrangnomes;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +30,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         new GnomeRequest(this).execute("api_data");
 
+
+
+        final Button imagesButton = (Button) findViewById(R.id.imagesButton);
+        imagesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String url = "https://www.dropbox.com/sh/nen6hh47z4wh8cp/AAAJv8lY4w9wChJdnuhC1t9Ta?dl=0";
+
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+        //LIGHT CONTROLS
         final Button turnOnLights = (Button) findViewById(R.id.lightOn);
         turnOnLights.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -43,6 +58,51 @@ public class MainActivity extends AppCompatActivity {
                 // Perform action on click
             }
         });
+
+        final Button setAutoLights = (Button) findViewById(R.id.lightAuto);
+        setAutoLights.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new GnomeRequest(v.getContext()).execute("setAutoLights");
+                // Perform action on click
+            }
+        });
+
+        //FAN CONTROLS
+        final Button turnOnFan = (Button) findViewById(R.id.fanOn);
+        turnOnFan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new GnomeRequest(v.getContext()).execute("turnOnFan");
+                // Perform action on click
+            }
+        });
+
+        final Button turnOffFan = (Button) findViewById(R.id.fanOff);
+        turnOffFan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new GnomeRequest(v.getContext()).execute("turnOffFan");
+                // Perform action on click
+            }
+        });
+
+        final Button setAutoFan = (Button) findViewById(R.id.fanAuto);
+        setAutoFan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new GnomeRequest(v.getContext()).execute("setAutoFan");
+                // Perform action on click
+            }
+        });
+
+
+
+        final Button takePicture = (Button) findViewById(R.id.CaptureButton);
+        takePicture.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new GnomeRequest(v.getContext()).execute("take_picture");
+                // Perform action on click
+            }
+        });
+
+
     }
 
     @Override
@@ -108,9 +168,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            TextView textView = (TextView)findViewById(R.id.json_data);
+            //TextView textView = (TextView)findViewById(R.id.json_data);
             //System.out.println(textView);
-            textView.setText(result);
+            //textView.setText(result);
             //Do something with the JSON string
 
         }

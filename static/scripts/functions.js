@@ -11,6 +11,7 @@
 	function callDataApi(data){
 			$('#measurementTable tbody').empty();
 	    $.each(data, function(i, item) {
+
 				if( i === "WaterAlarm") {
 					switch (item){
 						case "green":
@@ -28,7 +29,14 @@
 			            $('<td>').text(i),
 			            $('<td>').text(item ? "Ja" : "Nej")
 			        ).appendTo('#measurementTable');
+				} else if(item instanceof Array) {
+			   	var $tr = $('<tr>').append(
+		            $('<td>').text(i),
+		            $('<td>').text(parseFloat(item[0]).toFixed(2) + ((i.indexOf('Humidity') > -1 || i == 'Light') ? '%' : '°C') ),
+		            $('<td>').text(parseFloat(item[1]).toFixed(2) + ((i.indexOf('Humidity') > -1 || i == 'Light') ? '%' : '°C') )
+		        ).appendTo('#measurementTable');
 				} else {
+
 			   	var $tr = $('<tr>').append(
 		            $('<td>').text(i),
 		            $('<td>').text(parseFloat(item).toFixed(2) + ((i.indexOf('Humidity') > -1 || i == 'Light') ? '%' : '°C') )
