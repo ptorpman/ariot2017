@@ -155,7 +155,14 @@ class LampAndPump(object):
         else:
             # Auto
             self._lamp_manual_mode = False
-            
+
+    def get_lamp_on(self):
+        ''' Return if the lamp is on or off '''
+        return self._lamp_on
+    
+    def get_pump_on(self):
+        ''' Return if the pump is on or off '''
+        return self._pump_on
 
 # LIBRARY FUNCTIONS
 

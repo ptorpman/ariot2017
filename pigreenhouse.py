@@ -130,7 +130,10 @@ class Sensors(object):
         to_store['Light'] = [self._light, self._average['light']]
         to_store['WaterAlarm'] = self._water_alarm
         to_store['DoorOpen'] = self._door_open
-
+        to_store['FanIsOn'] = self._fan.get_fan_on()
+        to_store['PumpIsOn'] = self._lamp_and_pump.get_pump_on()
+        to_store['LampIsOn'] = self._lamp_and_pump.get_lamp_on()
+        
         with open('./sensorvalues.json', 'w') as aFile:
             aFile.write(json.dumps(to_store))
 
