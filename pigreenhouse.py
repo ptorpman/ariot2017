@@ -37,9 +37,12 @@ def check_input_file(owner):
         if os.path.exists(in_file):
             # Load file contents
             with open(in_file, 'r') as aFile:
-                contents = aFile.readlines()[0]
-                config = json.loads(contents)
-                owner.handle_input(config)
+                try:
+                    contents = aFile.readlines()[0]
+                    config = json.loads(contents)
+                    owner.handle_input(config)
+                except Exception as exc:
+                    print "* Input file problems..."
         if owner.stop_input_thread:
             return
         time.sleep(1)

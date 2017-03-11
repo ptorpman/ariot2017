@@ -21,8 +21,8 @@ def run_the_pump(owner):
     ''' Thread method to run the pump for a while '''
     print "* Turning pump on..."
     owner.pump_on()
-    print "* Waiting 5 seconds..."
-    time.sleep(5)
+    print "* Waiting 10 seconds..."
+    time.sleep(10)
     print "* Turning pump off..."
     owner.pump_off()
     owner.pump_thread_done = True
@@ -39,6 +39,7 @@ class LampAndPump(object):
         self.pump_thread_done = False
         self._pump_thread = None
 
+        self._backoff_time = 120
         
         GPIO.setmode(GPIO.BOARD) 
         GPIO.setup(self._lamp_port, GPIO.OUT)
@@ -82,9 +83,13 @@ class LampAndPump(object):
 
         # Light should be on on in the interval 0900 to 2100
 
+        if self._lamp_manual_mode:
+            return
+        
         if now.hour >= 9 and now.hour < 21:
             print "* Within light interval", float(light_value)
             # Within the interval
+            
             if float(light_value) < 50.0:
                 self.lamp_on()
             else:
@@ -105,10 +110,11 @@ class LampAndPump(object):
             # Pump already running
             return False
             
-        if (int(time.time()) - self._pump_started) < 300:
-            # We will not run pump more than every other 5 minutes
-            print "* Pump not started. Next possible start in %d seconds" % (300 - (int(time.time()) - self._pump_started))
+        if (int(time.time()) - self._pump_started) < self._backoff_time:
+            print "* Pump not started. Next possible start in %d seconds" % (self._backoff_time - (int(time.time()) - self._pump_started))
             return False
+
+        return True
 
         
     def handle_pump(self, alarm_value, soil_humidity):
@@ -120,13 +126,15 @@ class LampAndPump(object):
                 self._pump_thread.join()
                 self._pump_thread = None
                 self.pump_thread_done = False
-        
-        if alarm_value == "red":
+
+        print "* Water Level is : ", alarm_value
+                
+        if alarm_value == "red":           
             self.pump_off()
             return
 
         # If humidity is too low we need to run the pump for a while
-        if soil_humidity <  25.0:
+        if float(soil_humidity) <  25.0:
             self.run_the_pump()
 
     def run_the_pump(self):

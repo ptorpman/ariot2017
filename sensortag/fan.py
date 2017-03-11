@@ -8,7 +8,7 @@ class Fan(object):
     ''' This class handles the fan '''
     def __init__(self):
         ''' Constructor '''
-        self._max_air_temp = 22.05
+        self._max_air_temp = 22.10
         self._manual_mode = False
         self._fan_on = False
 
@@ -44,6 +44,9 @@ class Fan(object):
 
         print "HANDLE FAN. TEMP: ", air_temp
         print "HANDLE FAN. MAX: ", self._max_air_temp
+
+        if self._manual_mode:
+            return 
         
         if float(air_temp) > self._max_air_temp:
             print "* Turning on fan to cool stuff down..."

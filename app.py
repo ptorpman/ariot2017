@@ -14,7 +14,7 @@ fanConst = "fan"
 cameraConst = "take_picture"
 lampConst = "lamp"
 
-inputFile = {"lamp": "auto", "fan": "auto", "airtemp_max":"25"}
+inputFile = {"lamp": "auto", "fan": "auto", "airtemp_max":"22.05"}
 
 @app.route('/')
 def index():
