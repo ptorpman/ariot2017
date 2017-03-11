@@ -141,6 +141,7 @@ class Sensors(object):
 
         self._lamp_and_pump.handle_light(self._light)
         self._lamp_and_pump.handle_pump(self._water_alarm, self._soil_humidity)
+        self._fan.handle_fan(self._air_temp)
 
     def handle_input(self, config):
         ''' Handles input file '''

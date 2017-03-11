@@ -83,9 +83,12 @@ class LampAndPump(object):
         # Light should be on on in the interval 0900 to 2100
 
         if now.hour >= 9 and now.hour < 21:
+            print "* Within light interval", float(light_value)
             # Within the interval
-            if light_value < 50.0:
+            if float(light_value) < 50.0:
                 self.lamp_on()
+            else:
+                self.lamp_off()
         else:
             # Outside, make sure lamp is off
             self.lamp_off()
